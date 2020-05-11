@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block heading %} There you go! {% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+<script src="{{ url_for('static', filename='dest_map.js') }}"></script>
+{% endblock %}
+{% block summary %} I hope you enjoyed all these trips {% endblock %}
+{% block body %}
+<br><br>
+<ul>
+    {% for new_flight in added_flights %}
+    <li>{{ new_flight["stops"][0]["city"] }} to {{ new_flight["stops"][1]["city"] }}</li>
+    <br>
+    {% endfor %}
+</ul>
+
+<br><br>
+
+<h3>
+    <p>
+        Here is aproximately how much time you spent on an airplane in {{ mode }}:
+        {{ time }}
+    </p>
+</h3>
+
+<br><br>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3" id="chartdiv"></div>
+</div>
+
+<a href="{{ url_for('durations', duration='hours') }}" class="btn btn-light"> Try it in hours </a>
+
+<a href="{{ url_for('durations', duration='minutes') }}" class="btn btn-light"> Try it in minutes </a>
+
+<a href="{{ url_for('durations', duration='seconds') }}" class="btn btn-light"> Try it in seconds </a>
+
+<br><br>
+<a href="{{ url_for('main') }}" class="btn btn-dark"> Add more flights </a>
+{% endblock %}

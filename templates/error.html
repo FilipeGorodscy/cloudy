@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block heading %} ERROR {% endblock %}
+
+{% block summary %} Something bad happened! :( {% endblock %}
+
+{% block body %}
+
+<p>
+    <h2> There's no way you can travel from this origin to this destination </h2>
+</p>
+<p>
+    Here are some things you could have done wrong:
+    <ul>
+        <li> Did not insert origin city. </li>
+        <li> Did not insert destination city. </li>
+        <li> Forgot do "Add route" before calculating. </li>
+        <li> Chose the same origin and destination. </li>
+    </ul>
+</p>
+<h5> Please try again: </h5>
+<br>
+<a class="btn btn-dark" href="{{ (url_for('main')) }}"> Select other route </a>
+{% endblock %}

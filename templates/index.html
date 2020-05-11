@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block heading %} <span> Welcome to Cloudy! </span> <br> {% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+{% endblock %}
+{% block summary %} Calculate how much time you've spent on an airplane {% endblock %}
+{% block body %}
+<form action="{{ url_for('add_flights') }}" method="post" class="justify-content-between">
+    <br>
+    <div>
+        {% if added_flights != [] %}
+        Here are the flights you added so far: <br><br>
+        {% endif %}
+        {% for new_flight in added_flights %}
+        <ul class="list-group">
+            <li class="list-group-item col-sm-4"> {{ new_flight["stops"][0]["city"] }} to
+                {{ new_flight["stops"][1]["city"] }} {% if returning[added_flights.index(new_flight)] == 1 %} (x2)
+                {% endif %}</li>
+        </ul>
+        {% endfor %}
+    </div>
+    <br><br>
+    <div>
+        <div class="row justify-content-between">
+            <div class="background-form col-sm-4 left-align">
+                <label for="flight_origin"> <b>Origin</b> </label>
+                <input list="flight_origin" name="flight_origin" aria-describedby="origin-help"
+                    placeholder="Flight Origin" class="input-margin origin form-control">
+                <datalist id="flight_origin">
+                    {% for country in countries1 %}
+                    <option value="{{ country }}">
+                        {{ country }}
+                    </option>
+                    {% endfor %}
+                </datalist>
+                <small id="origin-help" class="form-text text-muted"> Please select from which country you flew.
+                </small>
+                <br>
+                <div class="origin-city"></div>
+                <br><br>
+                <label for="flight_destination"> <b>Destination</b> </label>
+                <input list="flight_destination" name="flight_destination" placeholder="Flight Destination"
+                    aria-describedby="dest-help" class="input-margin destination form-control">
+                <datalist id="flight_destination">
+                    {% for country in countries2 %}
+                    <option value="{{ country }}">
+                        {{ country }}
+                    </option>
+                    {% endfor %}
+                </datalist>
+                <small id="dest-help" class="form-text text-muted"> Please select for which country you flew.
+                </small>
+                <br>
+                <div class="destination-city"></div>
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" name="returning" type="checkbox" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Apply returning flight for this route
+                    </label>
+                </div>
+            </div>
+            <div id="chartdiv" class="col-sm-6"></div>
+        </div>
+    </div>
+    <br><br>
+    <button class="btn btn-light"> Add Route </button>
+    <a href="{{ url_for('index') }}" class="btn btn-light" onclick="sessionStorage.clear()"> Clear all </a>
+    <a href="{{ url_for('remove_last') }}" class="btn btn-light" onclick="remove_last()">Clear last</a>
+    <a href="{{ url_for('durations', duration='hours') }}" class="btn btn-dark">
+        Calculate </a>
+</form>
+{% endblock %}

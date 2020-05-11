@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Cloudy </title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    {% block scripts %}{% endblock %}
+
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+</head>
+
+<nav class="navbar fixed-top navbar-light bg-light">
+    <a class="navbar-brand" href="{{ url_for('main') }}">
+        <img src="../static/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+        Cloudy
+    </a>
+    <button class="btn btn-light my-2 my-sm-0"
+        onclick="alert('Please, contact us at: filipegorodscy@gmail.com')">Contact Us</button>
+</nav>
+
+<body class="text-left background top-align">
+
+    <h1 class="display-2">{% block heading %}{% endblock %}</h1>
+    <h2> {% block summary %}{% endblock %}</h2>
+
+    {% block body %}
+    {% endblock %}
+</body>
+
+</html>

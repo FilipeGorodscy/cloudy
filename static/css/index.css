@@ -1,0 +1,41 @@
+@keyframes grow {
+    from {
+        font-size: 30%;
+    }
+    to {
+        font-size: 90%;
+    }
+}
+
+span {
+    animation-name: grow;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+#chartdiv {
+    width: 100%;
+    height: 500px;
+}
+
+.background {
+    background-color: rgb(255, 255, 255);
+}
+
+.background-form {
+    background-color: rgb(228, 239, 240);
+    padding: 2%;
+}
+
+.input-margin {
+    margin-right: -50%;
+}
+
+.left-align {
+    margin-left: 0.5%;
+}
+
+.top-align {
+    margin-top:5%;
+    margin-left: 2%;
+}
