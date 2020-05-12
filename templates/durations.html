@@ -18,10 +18,12 @@
 <br><br>
 
 <h3>
-    <p>
-        Here is aproximately how much time you spent on an airplane in {{ mode }}:
-        {{ time }}
-    </p>
+    <div class="container">
+        <div class="text-center">
+            Here is aproximately how much time you spent on an airplane in {{ mode }}:
+            <h1 class="display-2">{{ time|round(2) }}</h1>
+        </div>
+    </div>
 </h3>
 
 <br><br>

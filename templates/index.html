@@ -15,7 +15,8 @@
         {% for new_flight in added_flights %}
         <ul class="list-group">
             <li class="list-group-item col-sm-4"> {{ new_flight["stops"][0]["city"] }} to
-                {{ new_flight["stops"][1]["city"] }} {% if returning[added_flights.index(new_flight)] == 1 %} (x2)
+                {{ new_flight["stops"][1]["city"] }} {% if returning[added_flights.index(new_flight)] == 1 %}
+                (x2)
                 {% endif %}</li>
         </ul>
         {% endfor %}
@@ -60,15 +61,30 @@
                         Apply returning flight for this route
                     </label>
                 </div>
+                <br><br>
+                <div class="alert alert-warning" role="alert">
+                    Don't forget to "Add Route" before "Calculate"!
+                </div>
             </div>
-            <div id="chartdiv" class="col-sm-6"></div>
+            <div id="chartdiv" class="col-sm-6"><label>You can also select from the map:</label></div>
         </div>
     </div>
     <br><br>
-    <button class="btn btn-light"> Add Route </button>
-    <a href="{{ url_for('index') }}" class="btn btn-light" onclick="sessionStorage.clear()"> Clear all </a>
-    <a href="{{ url_for('remove_last') }}" class="btn btn-light" onclick="remove_last()">Clear last</a>
-    <a href="{{ url_for('durations', duration='hours') }}" class="btn btn-dark">
-        Calculate </a>
+    <div class="row">
+        <div class="col-sm-2">
+            <a href="{{ url_for('index') }}" class="btn btn-light" onclick="sessionStorage.clear()"> Clear all </a>
+            <a href="{{ url_for('remove_last') }}" class="btn btn-light" onclick="remove_last()">Clear last</a>
+        </div>
+        <div class="col-sm-2 offset-sm-1">
+            <button class="btn btn-dark"> Add Route </button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <a href="{{ url_for('durations', duration='hours') }}" class="btn btn-dark col-sm-4">
+                Calculate </a>
+        </div>
+    </div>
 </form>
 {% endblock %}
