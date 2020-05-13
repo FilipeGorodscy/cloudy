@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let countries = sessionStorage.getItem("countries").split(", ");
-    countries.pop();
+    let countries_raw = sessionStorage.getItem("countries").split(", ");
+    countries_raw.pop();
+    let countries = countries_raw.map((e, i) => [i, e]);
 
-    let origins = countries.filter(elem => countries.indexOf(elem) % 2 === 0);
-    let destinations = countries.filter(elem => countries.indexOf(elem) % 2 === 1);
+    let origins = countries.filter(elem => elem[0] % 2 === 0);
+    let destinations = countries.filter(elem => elem[0] % 2 === 1);
 
     let [origin_ids, origin_names] = get_id_name(origins);
     let [dest_ids, dest_names] = get_id_name(destinations);
@@ -28,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function get_id_name(country) {
-    let id = country.map(elem => elem.split(" ")[elem.split(" ").length - 1]);
+    let id = country.map(elem => elem[1].split(" ")[elem[1].split(" ").length - 1]);
     let name = country.map(elem =>
-        elem.split(" ").splice(0, elem.split(" ").length - 1));
+        elem[1].split(" ").splice(0, elem[1].split(" ").length - 1));
     return [id, name];
 }
