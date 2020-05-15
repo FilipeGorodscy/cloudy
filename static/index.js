@@ -82,7 +82,7 @@ function change_color(polygonSeries, polygonTemplate) {
     const origin = origin_selector.value.split(' ');
     const dest = destination_selector.value.split(' ');
 
-    if (is_flight_valid(origin, destination)) {
+    if (is_flight_valid(origin, dest)) {
         increment_sessionStr();
     }
 
