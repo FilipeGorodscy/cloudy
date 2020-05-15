@@ -49,15 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
     polygonTemplate.events.on("hit", function (ev) {
         if (count) {
             destination_selector.value = ev.target.dataItem.dataContext.name + " " + ev.target.dataItem.dataContext.id;
-            append_city(city, "dest-city", ".destination-city");
-            change_color(polygonSeries, polygonTemplate);
-            //alert("Don't forget to add the city!")
+            select_country("dest-city", ".destination-city", polygonSeries, polygonTemplate)
             count--;
         } else {
             origin_selector.value = ev.target.dataItem.dataContext.name + " " + ev.target.dataItem.dataContext.id;
-            append_city(city, "origin-city", ".origin-city");
-            change_color(polygonSeries, polygonTemplate);
-            //alert("Don't forget to add the city!")
+            select_country("origin-city", ".origin-city", polygonSeries, polygonTemplate)
             count++;
         }
     })
@@ -67,33 +63,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     origin_selector.onchange = () => {
-        if (origin_selector.value === "Russian Federation RU") { origin_selector.value = "Russia RU" }
-        append_city(city, "origin-city", ".origin-city");
-        change_color(polygonSeries, polygonTemplate);
-        count++;
+        select_country("origin-city", ".origin-city", polygonSeries, polygonTemplate)
     }
 
     destination_selector.onchange = () => {
-        if (origin_selector.value === "Russian Federation RU") { origin_selector.value = "Russia RU" }
-        append_city(city, "dest-city", ".destination-city");
-        change_color(polygonSeries, polygonTemplate);
-        count--;
+        select_country("dest-city", ".destination-city", polygonSeries, polygonTemplate)
     }
 
 });
 
+function select_country(name, selector, polygonSeries, polygonTemplate) {
+    if (origin_selector.value === "Russian Federation RU") { origin_selector.value = "Russia RU" }
+    append_city(city, name, selector);
+    change_color(polygonSeries, polygonTemplate);
+}
+
 function change_color(polygonSeries, polygonTemplate) {
     const origin = origin_selector.value.split(' ');
     const dest = destination_selector.value.split(' ');
-    if (origin_selector.value && destination_selector.value) {
-        countries_str += origin_selector.value + ", " + destination_selector.value + ", ";
+
+    if (is_flight_valid(origin, destination)) {
+        increment_sessionStr();
     }
-    origin_id = origin.pop();
-    dest_id = dest.pop();
-    origin_name = origin[0];
-    dest_name = dest[0];
-    if (origin.length > 1) { origin_name = origin.join(' ') }
-    if (dest.length > 1) { dest_name = dest.join(' ') }
+
+    [origin_id, origin_name] = get_id_name(origin);
+    [dest_id, dest_name] = get_id_name(dest);
+
     selected_countries = [{
         "id": origin_id,
         "name": origin_name,
@@ -105,7 +100,6 @@ function change_color(polygonSeries, polygonTemplate) {
         "value": 50,
         "fill": am4core.color("#F05C5C")
     }];
-    sessionStorage.setItem("countries", countries_str);
     polygonSeries.data = selected_countries;
     polygonTemplate.propertyFields.fill = "fill";
 }
@@ -133,4 +127,22 @@ function remove_last() {
     }
     countries = countries.join(', ')
     sessionStorage.setItem("countries", countries);
+}
+
+function get_id_name(mode) {
+
+    mode_id = mode.pop();
+    mode_name = mode[0];
+    if (mode.length > 1) { mode_name = mode.join(' ') }
+
+    return [mode_id, mode_name]
+}
+
+function increment_sessionStr() {
+    countries_str += origin_selector.value + ", " + destination_selector.value + ", ";
+    sessionStorage.setItem("countries", countries_str);
+}
+
+function is_flight_valid(origin, destination) {
+    return origin.value && destination.value
 }

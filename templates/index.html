@@ -12,10 +12,10 @@
         {% if added_flights != [] %}
         Here are the flights you added so far: <br><br>
         {% endif %}
-        {% for new_flight in added_flights %}
+        {% for flight in added_flights %}
         <ul class="list-group">
-            <li class="list-group-item col-sm-4"> {{ new_flight["stops"][0]["city"] }} to
-                {{ new_flight["stops"][1]["city"] }} {% if returning[added_flights.index(new_flight)] == 1 %}
+            <li class="list-group-item col-sm-4"> {{ flight.origin }} to {{ flight.destination }}
+                {% if returning[added_flights.index(flight)] == 1 %}
                 (x2)
                 {% endif %}</li>
         </ul>

@@ -2,6 +2,7 @@ import os
 import functools
 import operator
 import requests
+from flights import *
 from models import *
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_session import Session
@@ -52,10 +53,12 @@ def add_flights():
     if res_distance.status_code != 200:
         return redirect(url_for('error'))
 
-    flight = res_distance.json()
+    flight_props = res_distance.json()
+    flight = Flight(origin=flight_origin, destination=flight_destination,
+                    distance=flight_props["distance"])
 
     if request.form.get('returning'):
-        flight["distance"] *= 2
+        flight.distance *= 2
         session["returning"].append(1)
     else:
         session["returning"].append(0)
@@ -76,7 +79,7 @@ def remove_last():
 @app.route("/distances")
 def get_distances():
 
-    distances = map(lambda x: x["distance"], session["added_flights"])
+    distances = map(lambda flight: flight.distance, session["added_flights"])
     total_distance = functools.reduce(operator.add, distances)
     return total_distance
 
