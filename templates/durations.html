@@ -9,8 +9,8 @@
 {% block body %}
 <br><br>
 <ul>
-    {% for new_flight in added_flights %}
-    <li>{{ new_flight["stops"][0]["city"] }} to {{ new_flight["stops"][1]["city"] }}</li>
+    {% for flight in added_flights %}
+    <li>{{ flight.origin }} to {{ flight.destination }} -- Distance of: {{ flight.distance }}km </li>
     <br>
     {% endfor %}
 </ul>
