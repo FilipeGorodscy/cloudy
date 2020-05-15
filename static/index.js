@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             count--;
         } else {
             origin_selector.value = ev.target.dataItem.dataContext.name + " " + ev.target.dataItem.dataContext.id;
-            select_country("origin-city", ".origin-city", polygonSeries, polygonTemplate)
+            select_country(city, "origin-city", ".origin-city", polygonSeries, polygonTemplate)
             count++;
         }
     })
@@ -63,16 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     origin_selector.onchange = () => {
-        select_country("origin-city", ".origin-city", polygonSeries, polygonTemplate)
+        select_country(city, "origin-city", ".origin-city", polygonSeries, polygonTemplate)
     }
 
     destination_selector.onchange = () => {
-        select_country("dest-city", ".destination-city", polygonSeries, polygonTemplate)
+        select_country(city, "dest-city", ".destination-city", polygonSeries, polygonTemplate)
     }
 
 });
 
-function select_country(name, selector, polygonSeries, polygonTemplate) {
+function select_country(city, name, selector, polygonSeries, polygonTemplate) {
     if (origin_selector.value === "Russian Federation RU") { origin_selector.value = "Russia RU" }
     append_city(city, name, selector);
     change_color(polygonSeries, polygonTemplate);
